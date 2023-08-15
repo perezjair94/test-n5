@@ -1,0 +1,25 @@
+@import 'variables';
+
+.container {
+  max-width: $max-width;
+  margin: auto;
+  padding: 0 20px;
+}
+
+.container h2 {
+  margin-bottom: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(50%, auto));
+  max-width: 100%;
+  gap: 20px;
+}
+
+.card {
+  padding: 15px;
+  border-radius: 8px;
+  background: rgba(#3a3a3a, 0.1);
+  margin-bottom: 10px;
+}

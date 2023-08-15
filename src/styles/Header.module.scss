@@ -1,0 +1,13 @@
+@import 'variables';
+
+.container {
+  max-width: $max-width;
+  margin: auto;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
