@@ -4,7 +4,7 @@ import ProductItemCard from "@/components/ProductItemCard";
 import { useCart } from "@/context/cart.context";
 import styles from "@/styles/Cart.module.scss";
 
-export default function Cart() {
+export default function CartPage() {
   const { cartItems, totalPrice, onBuyItems } = useCart();
   return (
     <Layout>
