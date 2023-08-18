@@ -3,6 +3,7 @@ import { api, sendRequest } from "@/libs/fetcher";
 import wompi from "@/libs/wompi";
 import useSWRMutation from "swr/mutation";
 import { IProduct } from "@/types/product";
+import { getCookie, setCookie } from "cookies-next";
 // import { FormValues, ResponseData } from "@/types/purchase";
 
 export interface ICartItem extends IProduct {
@@ -38,6 +39,10 @@ interface Props {
 }
 
 const CartProvider: React.FC<Props> = ({ children }) => {
+  const cookie = getCookie("cart");
+
+  const initialData = typeof cookie === "string" ? JSON.parse(cookie) : [];
+
   const [cartItems, setCartItems] = useState<ICartItem[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
@@ -50,6 +55,10 @@ const CartProvider: React.FC<Props> = ({ children }) => {
         body: arg,
       })
   );
+
+  useEffect(() => {
+    setCartItems(initialData);
+  }, []);
 
   const onBuyItems = async () => {
     const data = cartItems.map(({ id, quantity }) => ({
@@ -71,6 +80,7 @@ const CartProvider: React.FC<Props> = ({ children }) => {
       data.push(item);
     }
     setCartItems(data);
+    setCookie("cart", JSON.stringify(data));
   };
 
   const lessItemToCart = (id: number) => {
@@ -79,6 +89,7 @@ const CartProvider: React.FC<Props> = ({ children }) => {
     if (itemIndex !== -1) {
       data[itemIndex].quantity -= 1;
       setCartItems(data);
+      setCookie("cart", JSON.stringify(data));
     }
   };
 
@@ -88,6 +99,7 @@ const CartProvider: React.FC<Props> = ({ children }) => {
       const newCartItems = [...cartItems];
       newCartItems.splice(index, 1);
       setCartItems(newCartItems);
+      setCookie("cart", JSON.stringify(newCartItems));
     }
   };
 
@@ -104,7 +116,10 @@ const CartProvider: React.FC<Props> = ({ children }) => {
   const getTotalPrice = (): number =>
     cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
-  const cleanCart = () => setCartItems([]);
+  const cleanCart = () => {
+    setCartItems([]);
+    setCookie("cart", JSON.stringify([]));
+  };
 
   const contextValue: CartContextValue = {
     cartItems,
