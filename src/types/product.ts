@@ -4,3 +4,9 @@ export interface IProduct {
   price: number;
   amount: number;
 }
+
+export interface FormData {
+  name: IProduct["name"];
+  price: IProduct["price"];
+  amount: IProduct["amount"];
+}
