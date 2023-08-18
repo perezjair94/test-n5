@@ -22,7 +22,8 @@
   position: relative;
   & span {
     position: absolute;
-    background-color: rgb(255, 143, 162);
+    background-color: $primary;
+    color: white;
     right: -7px;
     top: -7px;
     border-radius: 100%;

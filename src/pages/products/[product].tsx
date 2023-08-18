@@ -4,7 +4,7 @@ import { IProduct } from "@/types/product";
 import { NextRouter, withRouter } from "next/router";
 import useSWR from "swr";
 import { useCart } from "@/context/cart.context";
-import styles from "@/styles/Home.module.scss";
+import styles from "@/styles/Product.module.scss";
 
 interface Props {
   router: NextRouter;
@@ -24,7 +24,14 @@ function ProductPage({ router }: Props) {
     <Layout>
       <main className={styles.container}>
         <h1>{product?.name}</h1>
-        <button onClick={onAddItemToCart}>Añadir al carrito</button>
+        <p>Cantidad: {product?.amount}</p>
+        <p>Precio: $ {product?.price}</p>
+        <button
+          onClick={onAddItemToCart}
+          disabled={product && product?.amount < 1}
+        >
+          Añadir al carrito
+        </button>
       </main>
     </Layout>
   );

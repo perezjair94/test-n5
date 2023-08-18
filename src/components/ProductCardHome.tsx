@@ -12,8 +12,9 @@ export default function ProductCardHome(product: IProduct) {
       <Link href={`/products/${product.id}`}>
         <h3>{product.name}</h3>
       </Link>
-      <p>$ {product.price}</p>
-      <button onClick={onAddItemtoCart}>
+      <p>Cantidad: {product.amount}</p>
+      <p>Precio: $ {product.price}</p>
+      <button onClick={onAddItemtoCart} disabled={product.amount < 1}>
         <Icon name="ShoppingCart" />
         <span>Agregar al carrito</span>
       </button>

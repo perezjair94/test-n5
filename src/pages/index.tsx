@@ -5,6 +5,7 @@ import { Icon } from "@/components/Icon";
 import { IProduct } from "@/types/product";
 import styles from "@/styles/Home.module.scss";
 import ProductCardHome from "@/components/ProductCardHome";
+import Link from "next/link";
 
 export default function Home() {
   const { data, isLoading } = useSWR<IProduct[]>(`${api}/products`);
@@ -12,7 +13,10 @@ export default function Home() {
   return (
     <Layout>
       <main className={styles.container}>
-        <h2>Productos</h2>
+        <div className={styles.header}>
+          <h2>Productos</h2>
+          <Link href="/dashboard">Añadir producto</Link>
+        </div>
         <div className={styles.grid}>
           {isLoading ? (
             <div>

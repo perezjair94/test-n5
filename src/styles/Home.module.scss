@@ -6,10 +6,16 @@
   padding: 0 20px;
 }
 
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(25%, auto));
-  max-width: 100%;
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 }
 
@@ -17,7 +23,6 @@
   padding: 15px;
   border-radius: 8px;
   background: rgba(#3a3a3a, 0.1);
-  border: 1px solid rgba(var(--card-border-rgb), 0);
   transition: background 200ms, border 200ms;
 }
 
@@ -29,6 +34,22 @@
 .card h3 {
   font-weight: 600;
   margin-bottom: 0.7rem;
+}
+
+.card button {
+  background: none;
+  border: none;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: $primary;
+  cursor: pointer;
+}
+
+.card button[disabled] {
+  color: rgb(183, 183, 183);
+  cursor: default;
 }
 
 /* Mobile */
