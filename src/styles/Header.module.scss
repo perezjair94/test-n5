@@ -11,3 +11,26 @@
   align-items: center;
   padding: 20px;
 }
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navCart {
+  position: relative;
+  & span {
+    position: absolute;
+    background-color: rgb(255, 143, 162);
+    right: -7px;
+    top: -7px;
+    border-radius: 100%;
+    height: 18px;
+    width: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+  }
+}
