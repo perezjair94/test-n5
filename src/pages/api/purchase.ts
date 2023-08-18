@@ -1,6 +1,4 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import jwt from "jsonwebtoken";
-import { api } from "@/libs/fetcher";
 import { ICartItem } from "@/context/cart.context";
 import { IProduct } from "@/types/product";
 import { productList, updateProduct } from "@/services/product.service";
