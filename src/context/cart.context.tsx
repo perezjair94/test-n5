@@ -17,6 +17,7 @@ interface CartContextValue {
   removeItemFromCart: (id: number) => void;
   getTotalPrice: () => number;
   onBuyItems: () => void;
+  cleanCart: () => void;
 }
 
 const CartContext = createContext<CartContextValue>({
@@ -27,6 +28,7 @@ const CartContext = createContext<CartContextValue>({
   removeItemFromCart: () => {},
   getTotalPrice: () => 0,
   onBuyItems: () => {},
+  cleanCart: () => {},
 });
 
 export const useCart = () => useContext(CartContext);
@@ -39,24 +41,26 @@ const CartProvider: React.FC<Props> = ({ children }) => {
   const [cartItems, setCartItems] = useState<ICartItem[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
-  // const { trigger } = useSWRMutation<ResponseData, null, string, FormValues>(
-  //   `${api}/purchases`,
-  //   (url, { arg }) =>
-  //     sendRequest({
-  //       url,
-  //       method: "POST",
-  //       body: arg,
-  //     })
-  // );
+  const { trigger } = useSWRMutation<{ success: boolean }, null, string, {}>(
+    "/api/purchase",
+    (url, { arg }) =>
+      sendRequest({
+        url,
+        method: "POST",
+        body: arg,
+      })
+  );
 
   const onBuyItems = async () => {
     const data = cartItems.map(({ id, quantity }) => ({
-      product: id,
+      id,
       quantity,
     }));
-    // const response = await trigger({ data });
-    // if (response && response.success)
-    //   wompi({ amount: totalPrice, reference: response.data.id });
+    const response = await trigger(data);
+
+    if (response?.success) {
+      return setCartItems([]);
+    }
   };
   const addItemToCart = (item: ICartItem) => {
     const data = [...cartItems];
@@ -100,6 +104,8 @@ const CartProvider: React.FC<Props> = ({ children }) => {
   const getTotalPrice = (): number =>
     cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
+  const cleanCart = () => setCartItems([]);
+
   const contextValue: CartContextValue = {
     cartItems,
     totalPrice,
@@ -108,6 +114,7 @@ const CartProvider: React.FC<Props> = ({ children }) => {
     removeItemFromCart,
     getTotalPrice,
     onBuyItems,
+    cleanCart,
   };
 
   return (
