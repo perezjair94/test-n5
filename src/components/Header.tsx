@@ -14,10 +14,12 @@ export default function Header() {
           <Link href="/">
             <h2>Test N5</h2>
           </Link>
-          <div>
+          <div className={styles.nav}>
             <Link href="/cart">
-              {cartItemsLength}
-              <Icon name="ShoppingCart" />
+              <div className={styles.navCart}>
+                {!!cartItems.length && <span>{cartItemsLength}</span>}
+                <Icon name="ShoppingCart" size={20} />
+              </div>
             </Link>
             <ToggleThemeButton />
           </div>
